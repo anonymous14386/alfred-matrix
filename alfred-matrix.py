@@ -97,35 +97,43 @@ async def btc(room, message):
     #Displays the current exchange rate of btc
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("btc"):
-        apiURL = 'https://api.coinlore.net/api/ticker/?id=90'
-        btcData = requests.get(apiURL)
-        btcJson = btcData.json()
-        btcData.close()
-        ticker = btcJson[0]["symbol"]
-        usd_price = btcJson[0]["price_usd"]
-        day_change = btcJson[0]["percent_change_24h"] + "%"
-        week_change = btcJson[0]["percent_change_7d"] + "%"
-        
-        btc_message = "~Price information for Bitcoin~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
-        await bot.api.send_markdown_message(room.room_id, btc_message)
-    
+        try:
+            apiURL = 'https://api.coinlore.net/api/ticker/?id=90'
+            btcData = requests.get(apiURL)
+            btcJson = btcData.json()
+            btcData.close()
+            ticker = btcJson[0]["symbol"]
+            usd_price = btcJson[0]["price_usd"]
+            day_change = btcJson[0]["percent_change_24h"] + "%"
+            week_change = btcJson[0]["percent_change_7d"] + "%"
+            
+            btc_message = "~Price information for Bitcoin~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
+            await bot.api.send_markdown_message(room.room_id, btc_message)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
+
 # Monero
 @bot.listener.on_message_event
 async def xmr(room, message):
     #Displays the current exchange rate of xmr    
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("xmr"):
-        apiURL = 'https://api.coinlore.net/api/ticker/?id=28'
-        btcData = requests.get(apiURL)
-        btcJson = btcData.json()
-        btcData.close()
-        ticker = btcJson[0]["symbol"]
-        usd_price = btcJson[0]["price_usd"]
-        day_change = btcJson[0]["percent_change_24h"] + "%"
-        week_change = btcJson[0]["percent_change_7d"] + "%"
-        
-        xmr_message = "~Price information for Monero~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
-        await bot.api.send_markdown_message(room.room_id, xmr_message)
+        try:
+            apiURL = 'https://api.coinlore.net/api/ticker/?id=28'
+            btcData = requests.get(apiURL)
+            btcJson = btcData.json()
+            btcData.close()
+            ticker = btcJson[0]["symbol"]
+            usd_price = btcJson[0]["price_usd"]
+            day_change = btcJson[0]["percent_change_24h"] + "%"
+            week_change = btcJson[0]["percent_change_7d"] + "%"
+            
+            xmr_message = "~Price information for Monero~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
+            await bot.api.send_markdown_message(room.room_id, xmr_message)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 
 # Ethereum
 @bot.listener.on_message_event
@@ -133,17 +141,21 @@ async def eth(room, message):
     #Displays the current exchange rate of eth
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("eth"):
-        apiURL = 'https://api.coinlore.net/api/ticker/?id=80'
-        btcData = requests.get(apiURL)
-        btcJson = btcData.json()
-        btcData.close()
-        ticker = btcJson[0]["symbol"]
-        usd_price = btcJson[0]["price_usd"]
-        day_change = btcJson[0]["percent_change_24h"] + "%"
-        week_change = btcJson[0]["percent_change_7d"] + "%"
-        
-        eth_message = "~Price information for Ethereum~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
-        await bot.api.send_markdown_message(room.room_id, eth_message)
+        try:
+            apiURL = 'https://api.coinlore.net/api/ticker/?id=80'
+            btcData = requests.get(apiURL)
+            btcJson = btcData.json()
+            btcData.close()
+            ticker = btcJson[0]["symbol"]
+            usd_price = btcJson[0]["price_usd"]
+            day_change = btcJson[0]["percent_change_24h"] + "%"
+            week_change = btcJson[0]["percent_change_7d"] + "%"
+            
+            eth_message = "~Price information for Ethereum~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
+            await bot.api.send_markdown_message(room.room_id, eth_message)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 
 # Ethereum Classic
 @bot.listener.on_message_event
@@ -151,17 +163,21 @@ async def ethc(room, message):
     #Displays the current exchange rate of ethc    
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("ethc"):
-        apiURL = 'https://api.coinlore.net/api/ticker/?id=118'    #ip = temp[2]
-        btcData = requests.get(apiURL)
-        btcJson = btcData.json()
-        btcData.close()
-        ticker = btcJson[0]["symbol"]
-        usd_price = btcJson[0]["price_usd"]
-        day_change = btcJson[0]["percent_change_24h"] + "%"
-        week_change = btcJson[0]["percent_change_7d"] + "%"
+        try:
+            apiURL = 'https://api.coinlore.net/api/ticker/?id=118'    #ip = temp[2]
+            btcData = requests.get(apiURL)
+            btcJson = btcData.json()
+            btcData.close()
+            ticker = btcJson[0]["symbol"]
+            usd_price = btcJson[0]["price_usd"]
+            day_change = btcJson[0]["percent_change_24h"] + "%"
+            week_change = btcJson[0]["percent_change_7d"] + "%"
 
-        ethc_message = "~Price information for Ethereum Classic~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
-        await bot.api.send_markdown_message(room.room_id, ethc_message)
+            ethc_message = "~Price information for Ethereum Classic~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
+            await bot.api.send_markdown_message(room.room_id, ethc_message)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 
 # LTC
 @bot.listener.on_message_event
@@ -171,17 +187,21 @@ async def ltc(room, message):
     
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("ltc"):
-        apiURL = 'https://api.coinlore.net/api/ticker/?id=1'
-        btcData = requests.get(apiURL)
-        btcJson = btcData.json()
-        btcData.close()
-        ticker = btcJson[0]["symbol"]
-        usd_price = btcJson[0]["price_usd"]
-        day_change = btcJson[0]["percent_change_24h"] + "%"
-        week_change = btcJson[0]["percent_change_7d"] + "%"
+        try:
+            apiURL = 'https://api.coinlore.net/api/ticker/?id=1'
+            btcData = requests.get(apiURL)
+            btcJson = btcData.json()
+            btcData.close()
+            ticker = btcJson[0]["symbol"]
+            usd_price = btcJson[0]["price_usd"]
+            day_change = btcJson[0]["percent_change_24h"] + "%"
+            week_change = btcJson[0]["percent_change_7d"] + "%"
 
-        ltc_message = "~Price information for Litecoin~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
-        await bot.api.send_markdown_message(room.room_id, ltc_message)
+            ltc_message = "~Price information for Litecoin~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
+            await bot.api.send_markdown_message(room.room_id, ltc_message)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 
 # DogeCoin
 @bot.listener.on_message_event
@@ -190,17 +210,21 @@ async def doge(room, message):
     
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("doge"):
-        apiURL = 'https://api.coinlore.net/api/ticker/?id=2'
-        btcData = requests.get(apiURL)
-        btcJson = btcData.json()
-        btcData.close()
-        ticker = btcJson[0]["symbol"]
-        usd_price = btcJson[0]["price_usd"]
-        day_change = btcJson[0]["percent_change_24h"] + "%"
-        week_change = btcJson[0]["percent_change_7d"] + "%"
+        try:
+            apiURL = 'https://api.coinlore.net/api/ticker/?id=2'
+            btcData = requests.get(apiURL)
+            btcJson = btcData.json()
+            btcData.close()
+            ticker = btcJson[0]["symbol"]
+            usd_price = btcJson[0]["price_usd"]
+            day_change = btcJson[0]["percent_change_24h"] + "%"
+            week_change = btcJson[0]["percent_change_7d"] + "%"
 
-        doge_message = "~Price information for Dogecoin~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
-        await bot.api.send_markdown_message(room.room_id, doge_message)
+            doge_message = "~Price information for Dogecoin~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
+            await bot.api.send_markdown_message(room.room_id, doge_message)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 
 # Ripple
 @bot.listener.on_message_event
@@ -209,17 +233,21 @@ async def xrp(room, message):
     
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("xrp"):
-        apiURL = 'https://api.coinlore.net/api/ticker/?id=58'
-        btcData = requests.get(apiURL)
-        btcJson = btcData.json()
-        btcData.close()
-        ticker = btcJson[0]["symbol"]
-        usd_price = btcJson[0]["price_usd"]
-        day_change = btcJson[0]["percent_change_24h"] + "%"
-        week_change = btcJson[0]["percent_change_7d"] + "%"
+        try:
+            apiURL = 'https://api.coinlore.net/api/ticker/?id=58'
+            btcData = requests.get(apiURL)
+            btcJson = btcData.json()
+            btcData.close()
+            ticker = btcJson[0]["symbol"]
+            usd_price = btcJson[0]["price_usd"]
+            day_change = btcJson[0]["percent_change_24h"] + "%"
+            week_change = btcJson[0]["percent_change_7d"] + "%"
 
-        ripple_message = "~Price information for Ripple~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
-        await bot.api.send_markdown_message(room.room_id, ripple_message)
+            ripple_message = "~Price information for Ripple~\nTicker: %s\nUSD Price: %s\n24hr change: %s\n7d change: %s" % (ticker, usd_price, day_change, week_change)
+            await bot.api.send_markdown_message(room.room_id, ripple_message)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 
 
 # Geoip
@@ -228,32 +256,32 @@ async def geoip(room, message):
 
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("geoip"):
-        command = str(message)
-        temp = command.split(" ")
+        try:
+            command = str(message)
+            temp = command.split(" ")
 
-        ip = temp[2]
+            ip = temp[2]
 
-        apiURL = 'http://ip-api.com/json/' + ip
-        ipData = requests.get(apiURL)
-        geoipJSON = ipData.json()
-        ipData.close()
+            apiURL = 'http://ip-api.com/json/' + ip
+            ipData = requests.get(apiURL)
+            geoipJSON = ipData.json()
+            ipData.close()
+            country = str(geoipJSON["country"])
+            countryCode = str(geoipJSON["countryCode"])
+            region = str(geoipJSON["region"])
+            regionName = str(geoipJSON["regionName"])
+            city = str(geoipJSON["city"])
+            zipCode = str(geoipJSON["zip"])
+            latitude = str(geoipJSON["lat"])
+            longitude = str(geoipJSON["lon"])
+            timezone = str(geoipJSON["timezone"])
+            isp = str(geoipJSON["isp"])
 
-        country = str(geoipJSON["country"])
-        countryCode = str(geoipJSON["countryCode"])
-        region = str(geoipJSON["region"])
-        regionName = str(geoipJSON["regionName"])
-        city = str(geoipJSON["city"])
-        zipCode = str(geoipJSON["zip"])
-        latitude = str(geoipJSON["lat"])
-        longitude = str(geoipJSON["lon"])
-        timezone = str(geoipJSON["timezone"])
-        isp = str(geoipJSON["isp"])
-
-        geoip_message = "~Geoip information for: " + ip + "~" + "\n" + "Country: " + country + "\n" + "Country Code: " + countryCode + "\n" + "Region: " + region + "\n" + "Region Name: " + regionName +  "\n" + "City: " + city + "\n" + "Zip Code: " + zipCode + "\n" + "Latitude: " + latitude + "\n" + "Longitude: " + longitude + "\n" + "Timezone: " + timezone + "\n" + "ISP: " + isp
-        await bot.api.send_markdown_message(room.room_id, geoip_message)
-    
-
-# BASE CONVERSION
+            geoip_message = "~Geoip information for: " + ip + "~" + "\n" + "Country: " + country + "\n" + "Country Code: " + countryCode + "\n" + "Region: " + region + "\n" + "Region Name: " + regionName +  "\n" + "City: " + city + "\n" + "Zip Code: " + zipCode + "\n" + "Latitude: " + latitude + "\n" + "Longitude: " + longitude + "\n" + "Timezone: " + timezone + "\n" + "ISP: " + isp
+            await bot.api.send_markdown_message(room.room_id, geoip_message)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 
 # Binary
 # Decimal to binary
@@ -262,40 +290,41 @@ async def dec2bin(room, message):
 
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("dec2bin"):
-        command = str(message)
-        temp = command.split(" ")
+        try:
+            command = str(message)
+            temp = command.split(" ")
+            uinput = temp[2]
+            apiURL = ("https://networkcalc.com/api/binary/" + uinput + "?from=10&to=2")
+            convData = requests.get(apiURL)
+            convJson = convData.json()
+            convData.close()
+            converted = convJson["converted"]
+            convertedVal = "~%s in binary~\n%s" % (uinput, converted)
+            await bot.api.send_markdown_message(room.room_id, convertedVal)
 
-        uinput = temp[2]
-        
-        apiURL = ("https://networkcalc.com/api/binary/" + uinput + "?from=10&to=2")
-        convData = requests.get(apiURL)
-        convJson = convData.json()
-        convData.close()
-
-        converted = convJson["converted"]
-
-        convertedVal = "~%s in binary~\n%s" % (uinput, converted)
-        await bot.api.send_markdown_message(room.room_id, convertedVal)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 # Binary to decimal
 @bot.listener.on_message_event
 async def bin2dec(room, message):
 
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("bin2dec"):
-        command = str(message)
-        temp = command.split(" ")
-
-        uinput = temp[2]
-        
-        apiURL = ("https://networkcalc.com/api/binary/" + uinput + "?from=2&to=10")
-        convData = requests.get(apiURL)
-        convJson = convData.json()
-        convData.close()
-
-        converted = convJson["converted"]
-
-        convertedVal = "~%s in decimal~\n%s" % (uinput, converted)
-        await bot.api.send_markdown_message(room.room_id, convertedVal)
+        try:
+            command = str(message)
+            temp = command.split(" ")
+            uinput = temp[2]
+            apiURL = ("https://networkcalc.com/api/binary/" + uinput + "?from=2&to=10")
+            convData = requests.get(apiURL)
+            convJson = convData.json()
+            convData.close()
+            converted = convJson["converted"]
+            convertedVal = "~%s in decimal~\n%s" % (uinput, converted)
+            await bot.api.send_markdown_message(room.room_id, convertedVal)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 
 # Hex
 # Decimal to hex
@@ -304,40 +333,48 @@ async def dec2hex(room, message):
 
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("dec2hex"):
-        command = str(message)
-        temp = command.split(" ")
+        try:
+            command = str(message)
+            temp = command.split(" ")
 
-        uinput = temp[2]
+            uinput = temp[2]
         
-        apiURL = ("https://networkcalc.com/api/binary/" + uinput + "?from=10&to=16")
-        convData = requests.get(apiURL)
-        convJson = convData.json()
-        convData.close()
+            apiURL = ("https://networkcalc.com/api/binary/" + uinput + "?from=10&to=16")
+            convData = requests.get(apiURL)
+            convJson = convData.json()
+            convData.close()
 
-        converted = convJson["converted"]
+            converted = convJson["converted"]
 
-        convertedVal = "~%s in hex~\n%s" % (uinput, converted)
-        await bot.api.send_markdown_message(room.room_id, convertedVal)
+            convertedVal = "~%s in hex~\n%s" % (uinput, converted)
+            await bot.api.send_markdown_message(room.room_id, convertedVal)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
+
 # Hex to decimal
 @bot.listener.on_message_event
 async def hex2dec(room, message):
 
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("hex2dec"):
-        command = str(message)
-        temp = command.split(" ")
-
-        uinput = temp[2]
+        try:
+            command = str(message)
+            temp = command.split(" ")
+            uinput = temp[2]
         
-        apiURL = ("https://networkcalc.com/api/binary/" + uinput + "?from=16&to=10")
-        convData = requests.get(apiURL)
-        convJson = convData.json()
-        convData.close()
+            apiURL = ("https://networkcalc.com/api/binary/" + uinput + "?from=16&to=10")
+            convData = requests.get(apiURL)
+            convJson = convData.json()
+            convData.close()
 
-        converted = convJson["converted"]
+            converted = convJson["converted"]
 
-        convertedVal = "~%s in decimal~\n%s" % (uinput, converted)
-        await bot.api.send_markdown_message(room.room_id, convertedVal)
+            convertedVal = "~%s in decimal~\n%s" % (uinput, converted)
+            await bot.api.send_markdown_message(room.room_id, convertedVal)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 
 #HASHING
 #MD5 hash
@@ -346,13 +383,16 @@ async def md5(room, message):
 
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("md5"):
-        command = str(message)
-        rawinput = command.split(' ', 1)[1]
-        toHash = rawinput[5:]
-        encoded = hashlib.md5(toHash.encode("utf-8")).hexdigest()
-        
-        message = "~MD5 hash of %s~" % (toHash) + "\n" + encoded
-        await bot.api.send_markdown_message(room.room_id, message)
+        try:
+            command = str(message)
+            rawinput = command.split(' ', 1)[1]
+            toHash = rawinput[5:]
+            encoded = hashlib.md5(toHash.encode("utf-8")).hexdigest()
+            message = "~MD5 hash of %s~" % (toHash) + "\n" + encoded
+            await bot.api.send_markdown_message(room.room_id, message)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 
 #SHA512 hash
 @bot.listener.on_message_event
@@ -360,14 +400,16 @@ async def sha512(room, message):
 
     match = botlib.MessageMatch(room, message, bot, PREFIX)
     if match.is_not_from_this_bot() and match.prefix() and match.command("sha512"):
-        command = str(message)
-        rawinput = command.split(' ', 1)[1]
-        toHash = rawinput[8:]
-        encoded = hashlib.sha512(toHash.encode("utf-8")).hexdigest()
-        
-        message = "~SHA512 hash of %s~" % (toHash) + "\n" + encoded
-        await bot.api.send_markdown_message(room.room_id, message)
-        
+        try:
+            command = str(message)
+            rawinput = command.split(' ', 1)[1]
+            toHash = rawinput[8:]
+            encoded = hashlib.sha512(toHash.encode("utf-8")).hexdigest()
+            message = "~SHA512 hash of %s~" % (toHash) + "\n" + encoded
+            await bot.api.send_markdown_message(room.room_id, message)
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 '''
 #IMAGE EXAMPLE
 @bot.listener.on_message_event
@@ -390,62 +432,66 @@ async def poke(room, message):
     match = botlib.MessageMatch(room, message, bot, PREFIX)
 
     if match.is_not_from_this_bot() and match.prefix() and match.command("poke"):
-        command = str(message)
-        rawinput = command.split(' ', 1)[1]
-        uInput = rawinput[6:]
+        try:
+            command = str(message)
+            rawinput = command.split(' ', 1)[1]
+            uInput = rawinput[6:]
 
-        if uInput.isnumeric():
-            pokeNumberData = str(uInput).zfill(3)
+            if uInput.isnumeric():
+                pokeNumberData = str(uInput).zfill(3)
 
-            query = (int(pokeNumberData) - 1)
+                query = (int(pokeNumberData) - 1)
 
-            image = 'https://www.serebii.net/pokemon/art/' + pokeNumberData + '.png'
-            name=pokeListData[query]
-            pokeType=pokeTypeData[query]
-            number=pokeNumberData
+                image = 'https://www.serebii.net/pokemon/art/' + pokeNumberData + '.png'
+                name=pokeListData[query]
+                pokeType=pokeTypeData[query]
+                number=pokeNumberData
         
-        elif uInput.lower() == "rand":
+            elif uInput.lower() == "rand":
 
-            randNum = random.randint(1, 1025)
+                randNum = random.randint(1, 1025)
 
-            pokeNumberData = str(randNum).zfill(3)
+                pokeNumberData = str(randNum).zfill(3)
 
-            query = (int(pokeNumberData) - 1)
+                query = (int(pokeNumberData) - 1)
 
-            image = 'https://www.serebii.net/pokemon/art/' + pokeNumberData + '.png'
-            name=pokeListData[query]
-            pokeType=pokeTypeData[query]
-            number=pokeNumberData
+                image = 'https://www.serebii.net/pokemon/art/' + pokeNumberData + '.png'
+                name=pokeListData[query]
+                pokeType=pokeTypeData[query]
+                number=pokeNumberData
 
-        else:
-            inLower = uInput.lower()
-            pokeNum = (pokeLowerListData.index(inLower) + 1)
-            pokeNumberData = str(pokeNum).zfill(3)
+            else:
+                inLower = uInput.lower()
+                pokeNum = (pokeLowerListData.index(inLower) + 1)
+                pokeNumberData = str(pokeNum).zfill(3)
 
-            query = (int(pokeNumberData) - 1)
+                query = (int(pokeNumberData) - 1)
 
-            image = 'https://www.serebii.net/pokemon/art/' + str(pokeNumberData) + '.png'
-            name = pokeListData[query]
-            pokeType = pokeTypeData[query]
-            number = pokeNumberData
+                image = 'https://www.serebii.net/pokemon/art/' + str(pokeNumberData) + '.png'
+                name = pokeListData[query]
+                pokeType = pokeTypeData[query]
+                number = pokeNumberData
         
-        imgURL = image
+            imgURL = image
 
-        urllib.request.urlretrieve(imgURL, "temp.png")
+            urllib.request.urlretrieve(imgURL, "temp.png")
         
-        message = "Name: %s\nNumber: %s\nType: %s\n" % (name, number, pokeType)
+            message = "Name: %s\nNumber: %s\nType: %s\n" % (name, number, pokeType)
 
-        await bot.api.send_markdown_message(room.room_id, message)
-        await bot.api.send_image_message(
-            room_id=room.room_id,
-            image_filepath="temp.png")
-        file_path = "temp.png"
+            await bot.api.send_markdown_message(room.room_id, message)
+            await bot.api.send_image_message(
+                room_id=room.room_id,
+                image_filepath="temp.png")
+            file_path = "temp.png"
 
-        if os.path.exists(file_path):
-            os.remove(file_path)
-            print(f"File '{file_path}' deleted successfully.")
-        else:
-            print(f"File '{file_path}' does not exist.")
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                print(f"File '{file_path}' deleted successfully.")
+            else:
+                print(f"File '{file_path}' does not exist.")
+        except:
+            message = "Invalid input"
+            await bot.api.send_markdown_message(room.room_id, message)
 
 #Tarot
 @bot.listener.on_message_event
@@ -454,50 +500,101 @@ async def tarot(room, message):
     match = botlib.MessageMatch(room, message, bot, PREFIX)
 
     if match.is_not_from_this_bot() and match.prefix() and match.command("tarot"):
-        command = str(message)
-        rawinput = command.split(' ', 1)[1]
-        argsList = rawinput[7:].split(' ')
-        deck = argsList[0]
-        amount = int(argsList[1])
+        try:
+            command = str(message)
+            rawinput = command.split(' ', 1)[1]
+            argsList = rawinput[7:].split(' ')
+            deck = argsList[0]
+            amount = int(argsList[1])
 
-        pathPart = "Tarot/%s/" % (deck)
+            pathPart = "Tarot/%s/" % (deck)
 
-        for i in range(amount):
+            for i in range(amount):
 
-            num = random.randint(0,77)
+                num = random.randint(0,77)
 
-            card = cardData[str(num + 1)]
+                card = cardData[str(num + 1)]
 
-            pos = random.randint(0,1)
+                pos = random.randint(0,1)
 
-            cardParts = card.split("|")
+                cardParts = card.split("|")
 
-            name = cardParts[1]
+                name = cardParts[1]
 
-            poseDescs = cardParts[2].split(";")
+                poseDescs = cardParts[2].split(";")
 
-            if pos == 0:
-                description = poseDescs[0]
-                position = "regular"
-                fileName = str(num+1) + ".jpg"
-                print(fileName)
-            else:
-                description = poseDescs[1]
-                name = name + " Reversed"
-                position = "reversed"
-                fileName = "r" + str(num+1) + ".jpg"
-                print(fileName)
+                if pos == 0:
+                    description = poseDescs[0]
+                    #position = "regular"
+                    fileName = str(num+1) + ".jpg"
+                    print(fileName)
+                else:
+                    description = poseDescs[1]
+                    name = name + " Reversed"
+                    #position = "reversed"
+                    fileName = "r" + str(num+1) + ".jpg"
+                    print(fileName)
 
-            capitalized_description = description[0].upper() + description[1:]
+                capitalized_description = description[0].upper() + description[1:]
 
-            file = (pathPart + fileName)
+                file = (pathPart + fileName)
 
-            message = "%s\n%s" % (name, capitalized_description)
+                message = "%s\n%s" % (name, capitalized_description)
+
+                await bot.api.send_markdown_message(room.room_id, message)
+                await bot.api.send_image_message(
+                    room_id=room.room_id,
+                    image_filepath=file)
+        except:
+            message = "Invalid input"
+
+            await bot.api.send_markdown_message(room.room_id, message)
+
+#Rocks
+'''
+@bot.command()
+async def rock(ctx, *, arg):
+    uInput = arg.lower()
+
+    RockEmb = discord.Embed(title=uInput.capitalize(), colour=0xC000FF)
+    RockEmb.add_field(name="Metaphysical properties:", value=(rockDB[uInput]["metaphysical"]))
+    fileName = uInput.replace(' ', '') + ".jpg"
+
+    file = discord.File("Rocks/" + fileName)
+
+    RockEmb.set_image(url="attachment://" + fileName)
+    await ctx.send(file=file, embed = RockEmb)
+'''
+@bot.listener.on_message_event
+async def rock(room, message):
+
+    match = botlib.MessageMatch(room, message, bot, PREFIX)
+
+    if match.is_not_from_this_bot() and match.prefix() and match.command("rock"):
+        command = str(message).split(' ', 1)[1]
+        uInput = command[6:].lower()
+
+        try:
+            title=uInput.capitalize()
+            metaphysical = rockDB[uInput]["metaphysical"]
+        
+            fileName = uInput.replace(' ', '') + ".jpg"
+            file = "Rocks/" + fileName
+
+            message = "%s\n%s" % (title, metaphysical)
 
             await bot.api.send_markdown_message(room.room_id, message)
             await bot.api.send_image_message(
                 room_id=room.room_id,
                 image_filepath=file)
+            print(rock)
+        except:
+            message = "Invalid rock"
+
+            await bot.api.send_markdown_message(room.room_id, message)
+
+
+
 
 # Echo
 @bot.listener.on_message_event
