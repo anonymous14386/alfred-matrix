@@ -81,6 +81,10 @@ async def help(room, message):
         Pokedex:
          - ~poke (name or number) - returns a specific pokemon
          - ~poke rand - returns a random pokemon
+        Tarot:
+         - Usage: "~tarot (deck) (amount)"
+         - Decks: 1: default, 2: crows
+         - Returns a set amount of cards randomly selected from a chosen deck
         Echo:
          - Usage: "~echo your message"
          - Echos your message back to you
@@ -442,6 +446,58 @@ async def poke(room, message):
             print(f"File '{file_path}' deleted successfully.")
         else:
             print(f"File '{file_path}' does not exist.")
+
+#Tarot
+@bot.listener.on_message_event
+async def tarot(room, message):
+
+    match = botlib.MessageMatch(room, message, bot, PREFIX)
+
+    if match.is_not_from_this_bot() and match.prefix() and match.command("tarot"):
+        command = str(message)
+        rawinput = command.split(' ', 1)[1]
+        argsList = rawinput[7:].split(' ')
+        deck = argsList[0]
+        amount = int(argsList[1])
+
+        pathPart = "Tarot/%s/" % (deck)
+
+        for i in range(amount):
+
+            num = random.randint(0,77)
+
+            card = cardData[str(num + 1)]
+
+            pos = random.randint(0,1)
+
+            cardParts = card.split("|")
+
+            name = cardParts[1]
+
+            poseDescs = cardParts[2].split(";")
+
+            if pos == 0:
+                description = poseDescs[0]
+                position = "regular"
+                fileName = str(num+1) + ".jpg"
+                print(fileName)
+            else:
+                description = poseDescs[1]
+                name = name + " Reversed"
+                position = "reversed"
+                fileName = "r" + str(num+1) + ".jpg"
+                print(fileName)
+
+            capitalized_description = description[0].upper() + description[1:]
+
+            file = (pathPart + fileName)
+
+            message = "%s\n%s" % (name, capitalized_description)
+
+            await bot.api.send_markdown_message(room.room_id, message)
+            await bot.api.send_image_message(
+                room_id=room.room_id,
+                image_filepath=file)
 
 # Echo
 @bot.listener.on_message_event
