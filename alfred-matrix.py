@@ -78,6 +78,9 @@ async def help(room, message):
          - ~dec2hex (input) - decimal to hexidecimal
          - ~hex2dec (input) - hexidecimal to decimal
          - Converts the input
+        Pokedex:
+         - ~poke (name or number) - returns a specific pokemon
+         - ~poke rand - returns a random pokemon
         Echo:
          - Usage: "~echo your message"
          - Echos your message back to you
