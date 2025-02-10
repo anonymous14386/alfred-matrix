@@ -1,18 +1,13 @@
 #Setup stuff
-import asyncio
 import json
-import discord
-from discord.ext import commands
 import random
 import requests
 import hashlib
 import urllib.request
 
 #Matrix specific
-import subprocess
 import simplematrixbotlib as botlib
 from urllib.request import ssl, socket
-import datetime, smtplib
 import os
 
 #Pull from config
