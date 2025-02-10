@@ -699,11 +699,9 @@ async def coin(room, message):
             command = str(message)
             rawinput = command.split(' ')
             amount = int(rawinput[2])
-            print(amount)
             
             for i in range(amount):
                 num = random.randint(0,1)
-                print(num)
                 if num == 1:
                     coin="Heads"
                     imgURL = "Coins/heads.png"
