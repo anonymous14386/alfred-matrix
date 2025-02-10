@@ -85,6 +85,12 @@ async def help(room, message):
          - Usage: "~tarot (deck) (amount)"
          - Decks: 1: default, 2: crows
          - Returns a set amount of cards randomly selected from a chosen deck
+        Eight ball:
+         - Usage: "~eight"
+         - Returns a fortune
+        GIFs:
+         - ~getrotated
+         - ~goldfish
         Echo:
          - Usage: "~echo your message"
          - Echos your message back to you
@@ -551,20 +557,6 @@ async def tarot(room, message):
             await bot.api.send_markdown_message(room.room_id, message)
 
 #Rocks
-'''
-@bot.command()
-async def rock(ctx, *, arg):
-    uInput = arg.lower()
-
-    RockEmb = discord.Embed(title=uInput.capitalize(), colour=0xC000FF)
-    RockEmb.add_field(name="Metaphysical properties:", value=(rockDB[uInput]["metaphysical"]))
-    fileName = uInput.replace(' ', '') + ".jpg"
-
-    file = discord.File("Rocks/" + fileName)
-
-    RockEmb.set_image(url="attachment://" + fileName)
-    await ctx.send(file=file, embed = RockEmb)
-'''
 @bot.listener.on_message_event
 async def rock(room, message):
 
@@ -575,26 +567,161 @@ async def rock(room, message):
         uInput = command[6:].lower()
 
         try:
+            if uInput == "rand":
+                num = random.randint(0,58)
+                rockstring="flourite,pyrite,fuchsite,quartzcrystal,agate,garnet,rhodochrosite,amazonite,hematite,ruby,amber,herkimerdiamond,rutilatedquartz,amethyst,howlite,sapphire,aquamarine,kunzite,selenite,aventurine,kyanite,silver,azurite,labradorite,smokyquartz,calcite,lapislazuli,sodalite,celestite,lepidolite,staurolite,chrysocolla,lingamstone,stromatolite,chrysoprase,malachite,tanzanite,citrine,moldavite,tigereye,cobaltiancalcite,moonstone,topaz,copal,obsidian,tourmalinatedquartz,danburite,onyx,tourmaline,emerald,opal,vanadinite,epidote,peridot,zircon,faitystone,petrifiedwood,fireagate,prehnite"
+                rocklist = rockstring.split(",")
+                uInput = rocklist[num]
+
             title=uInput.capitalize()
             metaphysical = rockDB[uInput]["metaphysical"]
         
             fileName = uInput.replace(' ', '') + ".jpg"
             file = "Rocks/" + fileName
 
-            message = "%s\n%s" % (title, metaphysical)
+            message = "Crystal name: %s\nMetaphysical effects: %s" % (title, metaphysical)
 
             await bot.api.send_markdown_message(room.room_id, message)
             await bot.api.send_image_message(
                 room_id=room.room_id,
                 image_filepath=file)
-            print(rock)
         except:
             message = "Invalid rock"
 
             await bot.api.send_markdown_message(room.room_id, message)
+#List rocks
+@bot.listener.on_message_event
+async def rocklist(room, message):
 
+    match = botlib.MessageMatch(room, message, bot, PREFIX)
+    if match.is_not_from_this_bot() and match.prefix() and match.command("rocklist"):
 
+        message = "Agate, Amber, Amethyst, Aventurine, Aquamarine, Azurite, Amazonite, Calcite, Celestite, Chrysocolla, Chrysoprase, Citrine, Cobaltian Calcite, Copal, Danburite, Emerald, Epidote, Fairy Stone, Fire Agate, Fluorite, Fuchsite, Garnet, Hematite, Herkimer Diamond, Howlite, Kunzite, Kyanite, Labradorite, Lapis Lazuli, Lepidolite, Lingam Stone, Malachite, Moldavite, Moonstone, Obsidian, Onyx, Opal, Peridot, Petrified Wood, Prehnite, Pyrite, Quartz Crystal, Rhodochrosite, Ruby, Rutilated Quartz, Sapphire, Selenite, Silver, Smoky Quartz, Sodalite, Staurolite, Stromatolite, Tanzanite, Tigereye, Topaz, Tourmaline, Tourmalinated Quartz, Vanadinite, Zircon"
+        await bot.api.send_markdown_message(room.room_id, message)
 
+#Goldfish
+@bot.listener.on_message_event
+async def goldfish(room, message):
+    
+    match = botlib.MessageMatch(room, message, bot, PREFIX)
+    if match.is_not_from_this_bot() and match.prefix() and match.command("goldfish"):
+        try:
+            imgURL = "https://i.kym-cdn.com/photos/images/newsfeed/002/486/154/c06.gif"
+            urllib.request.urlretrieve(imgURL, "temp.gif")
+            await bot.api.send_image_message(
+                room_id=room.room_id,
+                image_filepath="temp.gif")
+            file_path = "temp.gif"
+
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                print(f"File '{file_path}' deleted successfully.")
+            else:
+                print(f"File '{file_path}' does not exist.")
+        except:
+            message = "Error :("
+            await bot.api.send_markdown_message(room.room_id, message)
+
+#Get rotated idiot
+@bot.listener.on_message_event
+async def getrotated(room, message):
+    
+    match = botlib.MessageMatch(room, message, bot, PREFIX)
+    if match.is_not_from_this_bot() and match.prefix() and match.command("getrotated"):
+        try:
+            imgURL = "https://media.tenor.com/JNvOKP5bX6kAAAAM/rotate.gif"
+            urllib.request.urlretrieve(imgURL, "temp.gif")
+            await bot.api.send_image_message(
+                room_id=room.room_id,
+                image_filepath="temp.gif")
+            file_path = "temp.gif"
+
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                print(f"File '{file_path}' deleted successfully.")
+            else:
+                print(f"File '{file_path}' does not exist.")
+        except:
+            message = "Error :("
+            await bot.api.send_markdown_message(room.room_id, message)
+
+# Robohash
+@bot.listener.on_message_event
+async def robohash(room, message):
+
+    match = botlib.MessageMatch(room, message, bot, PREFIX)
+
+    if match.is_not_from_this_bot() and match.prefix() and match.command("robohash"):
+        try:
+            command = str(message)
+            rawinput = command.split(' ', 1)[1]
+            toHash = rawinput[10:]
+            imgURL = "https://robohash.org/%s.png" % toHash
+            
+            urllib.request.urlretrieve(imgURL, "temp.png")
+            await bot.api.send_image_message(
+                room_id=room.room_id,
+                image_filepath="temp.png")
+            file_path = "temp.png"
+
+            if os.path.exists(file_path):
+                os.remove(file_path)
+                print(f"File '{file_path}' deleted successfully.")
+            else:
+                print(f"File '{file_path}' does not exist.")
+        except:
+            message = "Error :("
+            await bot.api.send_markdown_message(room.room_id, message)
+
+# Eight ball
+@bot.listener.on_message_event
+async def eight(room, message):
+    
+    match = botlib.MessageMatch(room, message, bot, PREFIX)
+    if match.is_not_from_this_bot() and match.prefix() and match.command("eight"):
+        try:
+            num = random.randint(1,11)
+            imgURL = "8ball/" + str(num) + ".png"
+            await bot.api.send_image_message(
+                room_id=room.room_id,
+                image_filepath=imgURL)
+        except:
+            message = "Error :("
+            await bot.api.send_markdown_message(room.room_id, message)
+
+# Coin flip
+@bot.listener.on_message_event
+async def coin(room, message):
+
+    match = botlib.MessageMatch(room, message, bot, PREFIX)
+    if match.is_not_from_this_bot() and match.prefix() and match.command("coin"):
+        try:
+            command = str(message)
+            rawinput = command.split(' ')
+            amount = int(rawinput[2])
+            print(amount)
+            
+            for i in range(amount):
+                num = random.randint(0,1)
+                print(num)
+                if num == 1:
+                    coin="Heads"
+                    imgURL = "Coins/heads.png"
+                    await bot.api.send_image_message(
+                        room_id=room.room_id,
+                        image_filepath=imgURL)
+                    await bot.api.send_markdown_message(room.room_id, coin)
+                else:
+                    coin="Tails"
+                    imgURL = "Coins/tails.png"
+                    await bot.api.send_image_message(
+                        room_id=room.room_id,
+                        image_filepath=imgURL)
+                    await bot.api.send_markdown_message(room.room_id, coin)
+
+        except:
+            message = "Error :("
+            await bot.api.send_markdown_message(room.room_id, message)
 
 # Echo
 @bot.listener.on_message_event
@@ -609,6 +736,5 @@ async def echo(room, message):
     if match.is_not_from_this_bot() and match.prefix() and match.command("echo"):
         print("Room: {r}, User: {u}, Message: {m}".format(r=room.room_id, u=str(message).split(':')[0], m=str(message).split(':')[-1].strip()))
         await bot.api.send_text_message(room.room_id, " ".join(arg for arg in match.args()))
-
 
 bot.run()
