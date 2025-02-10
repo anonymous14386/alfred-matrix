@@ -6,14 +6,14 @@ from discord.ext import commands
 import random
 import requests
 import hashlib
-
-#test
+import urllib.request
 
 #Matrix specific
 import subprocess
 import simplematrixbotlib as botlib
 from urllib.request import ssl, socket
 import datetime, smtplib
+import os
 
 #Pull from config
 with open("config.json") as f:
@@ -347,28 +347,6 @@ async def md5(room, message):
         message = "~MD5 hash of %s~" % (toHash) + "\n" + encoded
         await bot.api.send_markdown_message(room.room_id, message)
 
-#SHA256 hash
-@bot.listener.on_message_event
-async def sha256(room, message):pokeLowerList = open("nameLower.txt", "r")
-    pokeLowerListDatat = pokeLowerList.read()
-    pokeLowerListData = pokeLowerListDatat.split(',')
-    pokeLowerList.close()
-
-    pokeList = open("name.txt", "r")
-    pokeListDatat = pokeList.read()
-    pokeListData = pokeListDatat.split(',')
-    pokeList.close()
-
-    pokeTypeList = open("type.txt", "r")
-    pokeTypeDatat = pokeTypeList.read()
-    pokeTypeData = pokeTypeDatat.split(',')
-    pokeTypeList.close()
-        toHash = rawinput[8:]
-        encoded = hashlib.sha256(toHash.encode("utf-8")).hexdigest()
-        
-        message = "~SHA256 hash of %s~" % (toHash) + "\n" + encoded
-        await bot.api.send_markdown_message(room.room_id, message)
-
 #SHA512 hash
 @bot.listener.on_message_event
 async def sha512(room, message):
@@ -382,7 +360,8 @@ async def sha512(room, message):
         
         message = "~SHA512 hash of %s~" % (toHash) + "\n" + encoded
         await bot.api.send_markdown_message(room.room_id, message)
-
+        
+'''
 #IMAGE EXAMPLE
 @bot.listener.on_message_event
 async def test(room, message):
@@ -395,8 +374,71 @@ async def test(room, message):
             image_filepath=example_image)
         message = "Alfred"
         await bot.api.send_markdown_message(room.room_id, message)
+'''
 
 #Pokedex
+@bot.listener.on_message_event
+async def poke(room, message):
+
+    match = botlib.MessageMatch(room, message, bot, PREFIX)
+
+    if match.is_not_from_this_bot() and match.prefix() and match.command("poke"):
+        command = str(message)
+        rawinput = command.split(' ', 1)[1]
+        uInput = rawinput[6:]
+
+        if uInput.isnumeric():
+            pokeNumberData = str(uInput).zfill(3)
+
+            query = (int(pokeNumberData) - 1)
+
+            image = 'https://www.serebii.net/pokemon/art/' + pokeNumberData + '.png'
+            name=pokeListData[query]
+            pokeType=pokeTypeData[query]
+            number=pokeNumberData
+        
+        elif uInput.lower() == "rand":
+
+            randNum = random.randint(1, 1025)
+
+            pokeNumberData = str(randNum).zfill(3)
+
+            query = (int(pokeNumberData) - 1)
+
+            image = 'https://www.serebii.net/pokemon/art/' + pokeNumberData + '.png'
+            name=pokeListData[query]
+            pokeType=pokeTypeData[query]
+            number=pokeNumberData
+
+        else:
+            inLower = uInput.lower()
+            pokeNum = (pokeLowerListData.index(inLower) + 1)
+            pokeNumberData = str(pokeNum).zfill(3)
+
+            query = (int(pokeNumberData) - 1)
+
+            image = 'https://www.serebii.net/pokemon/art/' + str(pokeNumberData) + '.png'
+            name = pokeListData[query]
+            pokeType = pokeTypeData[query]
+            number = pokeNumberData
+        
+        imgURL = image
+
+        urllib.request.urlretrieve(imgURL, "temp.png")
+        
+        message = "Name: %s\nNumber: %s\nType: %s\n" % (name, number, pokeType)
+
+        await bot.api.send_markdown_message(room.room_id, message)
+        await bot.api.send_image_message(
+            room_id=room.room_id,
+            image_filepath="temp.png")
+        file_path = "temp.png"
+
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            print(f"File '{file_path}' deleted successfully.")
+        else:
+            print(f"File '{file_path}' does not exist.")
 
 # Echo
 @bot.listener.on_message_event
